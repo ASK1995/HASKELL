@@ -1,0 +1,35 @@
+
+--data Int      = Int
+--	deriving(Eq,Show)
+
+--data Bool     = True | False
+--	deriving (Eq,Show)
+
+data Reg      = A | B
+    deriving (Eq,Show)
+
+data Expr     = Lit Int |Li Bool |Re Reg | Add Expr Expr | LTE Expr Expr | Not Expr |And Expr Expr
+    deriving(Eq,Show)
+---LTE signifies Less than Equal
+data Stmt     = Store Reg Expr| IfThenElse Expr Prog Prog
+    deriving(Eq,Show)
+
+type Prog     = [Stmt]
+--	deriving(Eq,Show)
+
+--A := 3;          { set register A to 3 }
+--B := A+2;        { set register B to A+2, which will be 5 }
+--if A <= B then   { if A is less than or equal to B ... }
+--  A := A + A;    { ... then double A }
+--else
+--  B := B + B;    { ... otherwise double B }
+--end;
+--B := A+B;        { set B to A+B }
+--                { at the end of the program: A=6, B=11 }
+
+sumFiveOrLess :: [Int] -> Prog
+sumFiveOrLess[]     = [Store A (Lit 0)]
+sumFiveOrLess(x:xs) = (sumFiveOrLess xs) ++ [IfThenElse (LTE (Lit x) (Lit 5)) [Store A (Add (Re A) (Lit x)) ]  [Store A (Add (Re A) (Lit 0)) ]]
+
+test :: Prog
+test = [Store A (Lit 0), Store A (Lit 3), Store B (Add (Re A) (Lit 2)), IfThenElse (LTE (Re A) (Re B))[Store A (Add (Re A) (Re A))] [Store (B) (Add (Re B) (Re B))],Store (B) (Add (Re A) (Re B))]

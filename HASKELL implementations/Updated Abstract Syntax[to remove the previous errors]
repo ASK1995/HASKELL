@@ -1,0 +1,44 @@
+
+--- START
+---data Reg      = A | B
+--    deriving (Eq,Show)
+
+--data Expr     = Lit Int |Li Bool |Re Reg | Add Expr Expr | LTE Expr Expr | Not Expr |And Expr Expr
+ --   deriving(Eq,Show)
+---LTE signifies Less than Equal
+--data Stmt     = Store Reg Expr| IfThenElse Expr Prog Prog
+ --   deriving(Eq,Show)
+
+--type Prog     = [Stmt]
+
+data Reg    = A | B
+    deriving (Eq,Show)
+
+data Expr1   = Lit Int |Re Reg | Add Expr1 Expr1
+    deriving (Eq,Show)
+data Expr2  = Li Bool |LTE Expr Expr | Not Expr2 | And Expr2 Expr2
+    deriving (Eq,Show)
+---LTE signifies Less than Equal
+data Expr=Expr1|Expr2
+    deriving(Eq,Show)
+data Stmt   = Store Reg Expr1| IfThenElse Expr2 Prog Prog
+    deriving(Eq,Show)
+
+type Prog   = [Stmt]
+
+--sumFiveOrLess :: [Int] -> Prog
+--sumFiveOrLess[]     = [Store A (Lit 0)]
+--sumFiveOrLess(x:xs) = (sumFiveOrLess xs) ++ [IfThenElse (LTE (Lit x) (Lit 5)) [Store A (Add (Re A) (Lit x)) ]  [Store A (Add (Re A) (Lit 0)) ]]
+
+--test1 :: Prog
+--test1 = Store A (Not (Lit 3))
+  
+
+--test2 :: Prog
+--test2 = Store B (Add (Lit 4) (Li True))
+
+--test3 :: Prog
+--test3 = Store A (Li True)
+
+--test4 :: Prog
+--test4 = IfThenElse (Add (Lit 2) (Lit 3)) [] [] 
